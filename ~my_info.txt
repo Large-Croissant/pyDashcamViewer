@@ -1,0 +1,1 @@
+Extract GPS Metadata from .MP4 and create .GPX using Exiftool: https://www.youtube.com/watch?v=Uje5si23lBk
