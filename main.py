@@ -28,18 +28,24 @@ def setup():
     logger.info("Beginning setup check")
     if EXIFTOOL_PATH.exists():
         logger.info("Exiftool found")
-        return
-    logger.warning("Exiftool not found, will download")
-    EXIFTOOL_VERSION = "exiftool-13.27_64"
-    os.system(rf"curl https://exiftool.org/{EXIFTOOL_VERSION}.zip -o {DIR / 'exiftool.zip'}")
-    logger.info("Exiftool downloaded")
-    os.system(rf"tar -xf {DIR / 'exiftool.zip'}")
-    logger.info("Extracted zip archive")
-    os.rename(DIR / EXIFTOOL_VERSION, DIR / "exiftool")
-    os.rename((DIR / "exiftool" / "exiftool(-k).exe"), DIR / "exiftool" / "exiftool.exe")
-    logger.info("Files renamed")
-    os.remove(DIR / "exiftool.zip")
-    logger.info("Cleaned up zip file")
+    else:
+        logger.warning("Exiftool not found, will download")
+        EXIFTOOL_VERSION = "exiftool-13.27_64"
+        os.system(rf"curl https://exiftool.org/{EXIFTOOL_VERSION}.zip -o {DIR / 'exiftool.zip'}")
+        logger.info("Exiftool downloaded")
+        os.system(rf"tar -xf {DIR / 'exiftool.zip'}")
+        logger.info("Extracted zip archive")
+        os.rename(DIR / EXIFTOOL_VERSION, DIR / "exiftool")
+        os.rename((DIR / "exiftool" / "exiftool(-k).exe"), DIR / "exiftool" / "exiftool.exe")
+        logger.info("Files renamed")
+        os.remove(DIR / "exiftool.zip")
+        logger.info("Cleaned up zip file")
+    if (DIR / "gps.fmt").exists():
+        logger.info("gpx.fmt found")
+    else:
+        logger.warning("gpx.fmt not found, will download")
+        os.system(rf"curl https://raw.githubusercontent.com/exiftool/exiftool/refs/heads/master/fmt_files/gpx.fmt -o {DIR / "gpx.fmt"}")
+        logger.info("gpx.fmt downloaded")
 
 
 if __name__ == "__main__":
